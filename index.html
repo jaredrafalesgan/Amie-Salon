@@ -252,25 +252,29 @@
   /* ---------- Hero ---------- */
   /* Full-bleed cinematic hero: video sits behind everything as .hero-bg,
      with a dark gradient + orb glows layered on top for legibility and
-     atmosphere, and the text content floats above it all. */
-  .hero{position:relative;background:var(--black);color:#fff;padding:200px 0 120px;overflow:hidden;min-height:88vh;display:flex;align-items:center;}
-  .hero-bg{position:absolute;inset:0;overflow:hidden;}
+     atmosphere. No poster/fallback image is ever set on the video — the
+     dark background + gradient IS the loading state, so the woman photo
+     never flashes up before the video does. Her photo is a composition
+     element beside the text, not a boxed card: mask-faded at the edges
+     into a large soft radial glow so she reads as part of the scene. */
+  .hero{position:relative;background:var(--black);color:#fff;padding:190px 0 100px;overflow:hidden;min-height:92vh;display:flex;align-items:center;}
+  .hero-bg{position:absolute;inset:0;overflow:hidden;background:var(--black);}
   .hero-bg video{
     position:absolute;top:50%;left:50%;width:100%;height:100%;min-width:100%;min-height:100%;
     transform:translate(-50%,-50%) scale(1.02);object-fit:cover;
   }
-  .hero-bg .poster-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .hero-bg::after{
     content:"";position:absolute;inset:0;
     background:
-      linear-gradient(115deg, rgba(10,9,8,.94) 0%, rgba(10,9,8,.82) 38%, rgba(10,9,8,.6) 68%, rgba(10,9,8,.75) 100%),
-      linear-gradient(0deg, rgba(10,9,8,.85) 0%, transparent 35%, transparent 70%, rgba(10,9,8,.6) 100%);
+      radial-gradient(circle at 80% 45%, rgba(120,20,70,.22), transparent 55%),
+      linear-gradient(100deg, rgba(10,9,8,.95) 0%, rgba(10,9,8,.8) 32%, rgba(10,9,8,.5) 62%, rgba(10,9,8,.74) 100%),
+      linear-gradient(0deg, rgba(10,9,8,.85) 0%, transparent 32%, transparent 68%, rgba(10,9,8,.62) 100%);
   }
   .hero .orb{z-index:1;}
-  .hero .orb-1{top:-14%;left:-10%;width:640px;height:640px;filter:blur(110px);opacity:.55;}
-  .hero .orb-2{bottom:-22%;right:-8%;width:560px;height:560px;filter:blur(100px);opacity:.4;animation-delay:-6s;}
-  .hero .wrap{position:relative;z-index:2;max-width:760px;margin:0;}
-  .hero h1{font-size:60px;font-weight:700;margin-bottom:22px;letter-spacing:-.015em;}
+  .hero .orb-1{top:-14%;left:-10%;width:640px;height:640px;filter:blur(110px);opacity:.5;}
+  .hero .orb-2{bottom:-22%;left:6%;width:520px;height:520px;filter:blur(100px);opacity:.32;animation-delay:-6s;}
+  .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;}
+  .hero h1{font-size:58px;font-weight:700;margin-bottom:22px;letter-spacing:-.015em;}
   .hero h1 .pink{color:var(--pink);}
   .hero .lede{
     font-family:var(--serif-accent);font-style:italic;font-weight:600;font-size:23px;
@@ -285,23 +289,47 @@
   .hero .meta-row .price-block .amount{font-family:var(--serif);font-weight:700;font-size:17px;color:#fff;}
   .hero .meta-row .divider{width:1px;height:34px;background:rgba(255,255,255,.18);}
   .hero .meta-row .roles{font-size:10.5px;letter-spacing:.08em;color:#c9c2b8;line-height:1.8;text-transform:uppercase;}
-  /* Floating photo card on the right — a distinct, visible still image
-     layered on top of the full-bleed video, not just a poster frame that
-     disappears once the video starts playing. */
-  .hero-photo{
-    position:absolute;z-index:2;top:50%;right:clamp(24px,5vw,90px);transform:translateY(-50%);
-    width:clamp(240px,24vw,360px);aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;
-    box-shadow:0 34px 80px -20px rgba(0,0,0,.65), 0 0 0 1px rgba(198,161,91,.3);
-    opacity:0;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .5s forwards;
+  /* Hero photo: integrated into the composition, not a boxed card.
+     No border-radius rectangle, no border, no box-shadow rectangle —
+     the image itself fades out at the edges via mask-image (an organic
+     ellipse, not a hard crop) into a large soft multi-color glow behind
+     it, so she reads as emerging from the scene rather than pasted on. */
+  .hero-photo{position:relative;justify-self:center;width:100%;max-width:460px;aspect-ratio:3/4;}
+  .hero-photo-glow{
+    position:absolute;inset:-18%;z-index:0;pointer-events:none;filter:blur(70px);
+    background:
+      radial-gradient(circle at 45% 32%, rgba(236,30,120,.42), transparent 58%),
+      radial-gradient(circle at 68% 62%, rgba(198,161,91,.34), transparent 55%),
+      radial-gradient(circle at 38% 76%, rgba(120,20,70,.4), transparent 58%);
+    animation:driftSoft 18s ease-in-out infinite;
   }
-  .hero-photo img{width:100%;height:100%;object-fit:cover;}
+  .hero-photo img{
+    position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;
+    mask-image:radial-gradient(ellipse 62% 76% at 50% 38%, black 42%, transparent 97%);
+    -webkit-mask-image:radial-gradient(ellipse 62% 76% at 50% 38%, black 42%, transparent 97%);
+    filter:drop-shadow(0 40px 55px rgba(0,0,0,.55));
+    opacity:0;animation:fadeUp 1.1s cubic-bezier(.22,1,.36,1) .4s forwards;
+  }
   .hero-badge{
-    position:absolute;top:16px;right:16px;width:66px;height:66px;border-radius:50%;z-index:3;
-    overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5);border:2px solid var(--gold-light);
+    position:absolute;z-index:2;top:4%;right:0;width:58px;height:58px;border-radius:50%;
+    overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.5);border:2px solid var(--gold-light);
     animation:floatY 5s ease-in-out infinite;
   }
   .hero-badge img{width:100%;height:100%;object-fit:cover;}
-  @media (max-width:1150px){ .hero-photo{display:none;} }
+
+  /* Thin-line floating salon accents around her — subtle, translucent,
+     varied sizes/positions, never emoji-like or crowding the subject. */
+  .hero-float{position:absolute;z-index:2;pointer-events:none;animation:floatY 6s ease-in-out infinite;}
+  .hero-float svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;}
+  .hero-float.gold{color:var(--gold-light);opacity:.55;}
+  .hero-float.pink{color:var(--pink);opacity:.5;}
+  .hero-float.sparkle{color:var(--gold-light);opacity:.75;}
+  .hero-float.sparkle svg{fill:currentColor;stroke:none;}
+
+  @media (max-width:1150px){
+    .hero .wrap{grid-template-columns:1fr;gap:56px;}
+    .hero-photo{max-width:400px;justify-self:center;}
+  }
 
   /* ---------- Two-column content sections ---------- */
   .split{position:relative;padding:112px 0;overflow:hidden;background:
@@ -564,19 +592,12 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="home">
   <div class="hero-bg">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto"
-      poster="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/hero/hero-poster.png">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto">
       <source src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/videos/virtual-tour.mp4" type="video/mp4">
     </video>
   </div>
   <div class="orb orb-pink orb-1"></div>
   <div class="orb orb-gold orb-2"></div>
-  <div class="hero-photo">
-    <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/hero/hero-poster.png" alt="A-1 FantasyBar LLC">
-    <div class="hero-badge">
-      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar badge">
-    </div>
-  </div>
   <div class="wrap">
     <div class="content hero-enter">
       <p class="eyebrow">Private Salon Suites</p>
@@ -602,6 +623,29 @@
         </div>
         <div class="divider"></div>
         <div class="roles">Barbers &bull; Hairstylists &bull; Estheticians<br>Lash Artists &bull; MUAs</div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="hero-photo-glow"></div>
+      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/hero/hero-poster.png" alt="A-1 FantasyBar LLC">
+      <div class="hero-badge">
+        <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar badge">
+      </div>
+      <!-- subtle luxury salon accents floating around her -->
+      <div class="hero-float gold" style="top:-2%;left:-10%;width:34px;height:34px;animation-delay:-1s;">
+        <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+      </div>
+      <div class="hero-float sparkle" style="top:8%;right:14%;width:16px;height:16px;animation-delay:-3s;">
+        <svg viewBox="0 0 24 24"><path d="M12 2l1.7 6.8L20 10l-6.3 1.2L12 18l-1.7-6.8L4 10l6.3-1.2z"/></svg>
+      </div>
+      <div class="hero-float pink" style="bottom:18%;left:-9%;width:30px;height:30px;animation-delay:-4.5s;">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg>
+      </div>
+      <div class="hero-float gold" style="bottom:-3%;right:6%;width:32px;height:32px;animation-delay:-2s;">
+        <svg viewBox="0 0 24 24"><path d="M18 3l3 3-9 9-4 1 1-4 9-9z"/><path d="M4 21h16"/></svg>
+      </div>
+      <div class="hero-float sparkle" style="top:46%;left:-13%;width:12px;height:12px;animation-delay:-5.5s;">
+        <svg viewBox="0 0 24 24"><path d="M12 2l1.7 6.8L20 10l-6.3 1.2L12 18l-1.7-6.8L4 10l6.3-1.2z"/></svg>
       </div>
     </div>
   </div>
