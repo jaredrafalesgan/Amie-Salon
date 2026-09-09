@@ -349,9 +349,18 @@
     var(--cream);
   }
   .split .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;}
-  .split.reverse .wrap{grid-template-columns:1fr 1fr;}
-  .split.reverse .media{order:2;}
-  .split.reverse .content{order:1;}
+
+  /* Professionals section: explicit grid-template-areas layout (not order-based) so the
+     text / image / icon-grid stacking order is deterministic at every breakpoint. */
+  #professionals .wrap{
+    display:grid;align-items:start;
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:"content media" "roles media";
+    column-gap:76px;row-gap:0;
+  }
+  #professionals .content{grid-area:content;}
+  #professionals .media{grid-area:media;align-self:stretch;margin:0;}
+  #professionals .role-grid{grid-area:roles;margin-top:32px;}
   .split h2{font-size:40px;font-weight:700;margin-bottom:0;}
   .split h2 .pink{color:var(--pink);display:block;}
   .split p.desc{color:var(--gray-600);font-weight:300;font-size:15px;line-height:1.85;max-width:440px;margin:0 0 30px;}
@@ -558,8 +567,9 @@
   /* ---------- Responsive ---------- */
   @media (max-width: 980px){
     .split .wrap{grid-template-columns:1fr;gap:36px;}
-    .split.reverse .media{order:1;}
-    .split.reverse .content{order:2;}
+    #professionals .wrap{grid-template-columns:1fr;grid-template-areas:"content" "media" "roles";row-gap:32px;}
+    #professionals .media{margin:0 auto;max-width:560px;width:100%;}
+    #professionals .role-grid{margin-top:0;}
     .why-grid{grid-template-columns:repeat(2,1fr);row-gap:22px;}
     .hero h1{font-size:44px;}
     .hero{min-height:auto;padding:170px 0 90px;}
@@ -577,7 +587,14 @@
     nav.primary-nav a{display:block;padding:16px 4px;font-size:13px;letter-spacing:.14em;border-bottom:1px solid rgba(198,161,91,.15);}
     .menu-toggle{display:block;}
     .nav-actions .btn-solid{display:none;}
-    .role-grid{grid-template-columns:repeat(2,1fr);row-gap:26px;}
+    #professionals .wrap{row-gap:26px;}
+    #professionals .media{width:88%;aspect-ratio:4/4.6;border-radius:28px;}
+    #professionals .media .asset-slot,
+    #professionals .media img,
+    #professionals .media video,
+    #professionals .media .asset-missing{border-radius:28px;}
+    #professionals .role-grid{grid-template-columns:repeat(2,1fr);column-gap:22px;row-gap:26px;max-width:320px;margin:0 auto;}
+    #professionals .role-item:nth-child(5){grid-column:1/-1;justify-self:center;}
     .why-grid{grid-template-columns:1fr;}
     .price-line{flex-direction:column;align-items:flex-start;gap:12px;}
     .price-line .for-list{border-left:none;padding-left:0;}
@@ -592,6 +609,10 @@
     .play-btn{position:relative;top:auto;right:auto;transform:none;margin:8px auto 0;}
     .play-btn:hover{transform:scale(1.07);}
     .tour{min-height:0;}
+  }
+  @media (max-width: 400px){
+    #professionals h2{font-size:25px;}
+    #professionals .media{width:92%;}
   }
 </style>
 </head>
@@ -721,28 +742,6 @@
       <h2 style="color:var(--near-black);">Independent Beauty<br>Professionals.</h2>
       <span class="heading-rule"></span>
       <p class="desc" style="margin-top:16px;">Whether you're just starting or ready to grow, our suites give you the freedom and support you need.</p>
-      <div class="role-grid">
-        <div class="role-item reveal" style="--rd:.05s;">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
-          <span>Barbers</span>
-        </div>
-        <div class="role-item reveal" style="--rd:.12s;">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg></div>
-          <span>Hairstylists</span>
-        </div>
-        <div class="role-item reveal" style="--rd:.19s;">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.5c0-1 .8-2 1.5-2M15 10.5c0-1-.8-2-1.5-2"/><path d="M9 15c1 1.2 2 1.5 3 1.5s2-.3 3-1.5"/></svg></div>
-          <span>Estheticians</span>
-        </div>
-        <div class="role-item reveal" style="--rd:.26s;">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <span>Lash Artists</span>
-        </div>
-        <div class="role-item reveal" style="--rd:.33s;">
-          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M18 3l3 3-9 9-4 1 1-4 9-9z"/><path d="M4 21h16"/></svg></div>
-          <span>Makeup Artists</span>
-        </div>
-      </div>
     </div>
     <div class="media reveal-scale" style="--rd:.15s;">
       <div class="asset-slot">
@@ -755,6 +754,28 @@
           <span>Upload to:</span>
           <code>public/images/professionals/professional-01.jpg</code>
         </div>
+      </div>
+    </div>
+    <div class="role-grid reveal" style="--rd:.2s;">
+      <div class="role-item reveal" style="--rd:.05s;">
+        <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+        <span>Barbers</span>
+      </div>
+      <div class="role-item reveal" style="--rd:.12s;">
+        <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg></div>
+        <span>Hairstylists</span>
+      </div>
+      <div class="role-item reveal" style="--rd:.19s;">
+        <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.5c0-1 .8-2 1.5-2M15 10.5c0-1-.8-2-1.5-2"/><path d="M9 15c1 1.2 2 1.5 3 1.5s2-.3 3-1.5"/></svg></div>
+        <span>Estheticians</span>
+      </div>
+      <div class="role-item reveal" style="--rd:.26s;">
+        <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <span>Lash Artists</span>
+      </div>
+      <div class="role-item reveal" style="--rd:.33s;">
+        <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M18 3l3 3-9 9-4 1 1-4 9-9z"/><path d="M4 21h16"/></svg></div>
+        <span>Makeup Artists</span>
       </div>
     </div>
   </div>
