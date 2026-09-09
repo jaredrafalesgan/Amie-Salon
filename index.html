@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A-1 FantasyBar LLC | Private Salon Suites for Beauty Professionals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#ec1e78;
+    --pink-dark:#c8135f;
+    --pink-light:#ffe3f0;
+    --black:#0c0c0e;
+    --near-black:#151316;
+    --gray-900:#221f22;
+    --gray-600:#6f6a6f;
+    --gray-300:#c9c4c8;
+    --gray-100:#f6f2f3;
+    --white:#ffffff;
+    --serif:'Playfair Display', Georgia, serif;
+    --sans:'Poppins', Arial, sans-serif;
+    --container: 1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--near-black);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:var(--sans);
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--pink);
+    margin:0 0 14px;
+  }
+  h1,h2,h3{font-family:var(--serif);margin:0;line-height:1.08;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:14.5px;
+    padding:14px 26px;
+    border-radius:40px;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-solid{background:var(--pink);color:#fff;}
+  .btn-solid:hover{background:var(--pink-dark);}
+  .btn-outline{background:transparent;border-color:var(--pink);color:var(--pink);}
+  .btn-outline:hover{background:var(--pink);color:#fff;}
+  .btn-outline-light{background:transparent;border-color:rgba(255,255,255,.55);color:#fff;}
+  .btn-outline-light:hover{background:#fff;color:var(--black);border-color:#fff;}
+  .icon{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* --- asset placeholder (shown only when an uploaded image is missing) --- */
+  .asset-slot{position:relative;width:100%;height:100%;}
+  .asset-missing{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-align:center;
+    width:100%;
+    height:100%;
+    min-height:260px;
+    padding:24px;
+    background:repeating-linear-gradient(135deg,#f1eef0,#f1eef0 10px,#e7e2e5 10px,#e7e2e5 20px);
+    border:2px dashed #cfc7cc;
+    border-radius:inherit;
+    color:#847d84;
+    font-family:var(--sans);
+  }
+  .asset-missing svg{width:34px;height:34px;stroke:#a89ea5;}
+  .asset-missing b{color:var(--near-black);font-size:13px;}
+  .asset-missing code{
+    background:#fff;
+    border:1px solid #ddd6da;
+    padding:3px 8px;
+    border-radius:6px;
+    font-size:11.5px;
+    color:var(--pink-dark);
+    word-break:break-all;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(12,12,14,.92);
+    backdrop-filter:blur(8px);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;gap:20px;}
+  .brand{display:flex;align-items:center;gap:12px;color:#fff;}
+  .brand img{height:44px;width:auto;}
+  .brand-text .title{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.02em;}
+  .brand-text .sub{font-size:9.5px;letter-spacing:.18em;color:var(--pink);margin-top:2px;}
+  nav.primary-nav ul{display:flex;gap:30px;}
+  nav.primary-nav a{
+    color:#e9e7ea;font-size:14px;font-weight:500;padding:6px 2px;border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.primary-nav a:hover, nav.primary-nav a.active{color:#fff;border-color:var(--pink);}
+  .nav-actions{display:flex;align-items:center;gap:16px;}
+  .menu-toggle{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px;}
+  .menu-toggle svg{width:26px;height:26px;}
+
+  /* ---------- Hero ---------- */
+  .hero{background:var(--black);color:#fff;padding:64px 0 46px;}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
+  .hero h1{font-size:52px;font-weight:700;margin-bottom:18px;}
+  .hero h1 .pink{color:var(--pink);}
+  .hero .lede{font-family:var(--sans);font-weight:600;font-size:17px;color:#fff;margin:0 0 14px;}
+  .hero p.desc{color:#b9b4b8;font-size:15px;line-height:1.7;max-width:480px;margin:0 0 30px;}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px;}
+  .hero .meta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-top:26px;border-top:1px solid rgba(255,255,255,.12);}
+  .hero .meta-row .price-block{display:flex;align-items:center;gap:10px;}
+  .hero .meta-row .price-block svg{width:26px;height:26px;color:var(--pink);flex:none;}
+  .hero .meta-row .price-block .label{font-size:11.5px;color:#a7a2a6;}
+  .hero .meta-row .price-block .amount{font-weight:700;font-size:15px;}
+  .hero .meta-row .divider{width:1px;height:34px;background:rgba(255,255,255,.16);}
+  .hero .meta-row .roles{font-size:11.5px;letter-spacing:.05em;color:#c7c2c6;line-height:1.7;text-transform:uppercase;}
+  .hero-media{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3.1;background:#1c1a1c;}
+  .hero-media .asset-slot img, .hero-media .asset-missing{border-radius:18px;}
+  .hero-media img{width:100%;height:100%;object-fit:cover;}
+  .hero-badge{
+    position:absolute;top:20px;right:20px;width:64px;height:64px;border-radius:50%;
+    overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.15);
+  }
+  .hero-badge img{width:100%;height:100%;object-fit:cover;}
+
+  /* ---------- Two-column content sections ---------- */
+  .split{padding:84px 0;}
+  .split .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .split.reverse .wrap{grid-template-columns:1fr 1fr;}
+  .split.reverse .media{order:2;}
+  .split.reverse .content{order:1;}
+  .split h2{font-size:38px;font-weight:700;margin-bottom:16px;}
+  .split h2 .pink{color:var(--pink);display:block;}
+  .split p.desc{color:var(--gray-600);font-size:15px;line-height:1.75;max-width:440px;margin:0 0 24px;}
+  .price-line{display:flex;align-items:baseline;gap:16px;margin-bottom:26px;flex-wrap:wrap;}
+  .price-line .big{font-family:var(--serif);font-weight:800;font-size:34px;color:var(--pink);}
+  .price-line .for-list{font-size:12.5px;line-height:1.7;color:var(--gray-600);border-left:1px solid #e2dde0;padding-left:16px;}
+  .price-line .for-list b{color:var(--near-black);display:block;font-weight:600;margin-bottom:2px;}
+  .media{border-radius:18px;overflow:hidden;aspect-ratio:4/3.3;}
+  .media .asset-slot, .media img, .media .asset-missing{width:100%;height:100%;border-radius:18px;}
+  .media img{object-fit:cover;}
+  .bg-tint{background:var(--gray-100);}
+
+  /* profession icon row */
+  .role-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:8px;}
+  .role-item{text-align:center;}
+  .role-item .icon-circle{
+    width:56px;height:56px;border-radius:50%;border:1.5px solid var(--pink);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--pink);
+  }
+  .role-item .icon-circle svg{width:24px;height:24px;}
+  .role-item span{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--near-black);}
+
+  /* ---------- Why choose us ---------- */
+  .why{padding:88px 0;background:var(--gray-100);}
+  .why-head{max-width:640px;margin:0 auto 54px;text-align:center;}
+  .why-head h2{font-size:36px;font-weight:700;}
+  .why-head h2 .pink{color:var(--pink);display:block;}
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  .why-item{padding:0 26px;border-left:1px solid #e2dde0;}
+  .why-item:first-child{border-left:none;padding-left:0;}
+  .why-item .icon-badge{width:40px;height:40px;color:var(--pink);margin-bottom:18px;}
+  .why-item .icon-badge svg{width:100%;height:100%;}
+  .why-item h3{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;}
+  .why-item p{font-size:13.5px;color:var(--gray-600);line-height:1.7;margin:0;}
+
+  /* ---------- Virtual tour ---------- */
+  .tour{position:relative;color:#fff;min-height:520px;display:flex;align-items:center;overflow:hidden;background:var(--black);}
+  .tour .tour-media{position:absolute;inset:0;}
+  .tour .tour-media img{width:100%;height:100%;object-fit:cover;opacity:.55;}
+  .tour .tour-media .asset-missing{opacity:.9;position:absolute;inset:0;border-radius:0;border:none;}
+  .tour::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.35) 100%);}
+  .tour .wrap{position:relative;z-index:2;padding:90px 28px;}
+  .tour h2{font-size:38px;font-weight:700;margin-bottom:14px;}
+  .tour p{color:#d9d5d8;font-size:15px;max-width:420px;margin:0 0 28px;}
+  .play-btn{
+    position:absolute;z-index:3;top:50%;right:max(6%, 28px);transform:translateY(-50%);
+    width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.14);
+    border:1.5px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;backdrop-filter:blur(2px);transition:transform .2s ease, background .2s ease;
+  }
+  .play-btn:hover{transform:translateY(-50%) scale(1.07);background:rgba(255,255,255,.24);}
+  .play-btn svg{width:28px;height:28px;color:#fff;margin-left:4px;}
+
+  /* video modal */
+  .video-modal{position:fixed;inset:0;background:rgba(6,6,8,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;}
+  .video-modal.open{display:flex;}
+  .video-modal .box{width:100%;max-width:920px;position:relative;}
+  .video-modal video{width:100%;border-radius:12px;background:#000;max-height:82vh;}
+  .video-modal .close{
+    position:absolute;top:-44px;right:0;background:none;border:none;color:#fff;cursor:pointer;
+    font-size:15px;display:flex;align-items:center;gap:6px;
+  }
+  .video-modal .close svg{width:20px;height:20px;}
+
+  /* ---------- CTA banner ---------- */
+  .cta-band{position:relative;background:var(--black);color:#fff;text-align:center;padding:86px 28px;overflow:hidden;}
+  .cta-band .blob{
+    position:absolute;right:-80px;bottom:-100px;width:420px;height:420px;
+    background:radial-gradient(circle at 30% 30%, var(--pink), transparent 70%);
+    opacity:.35;filter:blur(10px);
+  }
+  .cta-band h2{font-size:34px;font-weight:700;margin-bottom:10px;position:relative;}
+  .cta-band p{color:#b9b4b8;font-size:15px;margin:0 0 30px;position:relative;}
+  .cta-band .btn{position:relative;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--black);color:#fff;padding:38px 0;}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  footer .brand{gap:12px;}
+  footer .brand img{height:38px;}
+  footer .f-right{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .socials{display:flex;gap:14px;}
+  .socials a{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s ease,border-color .2s ease;
+  }
+  .socials a:hover{background:var(--pink);border-color:var(--pink);}
+  .socials svg{width:15px;height:15px;}
+  footer .tagline{font-size:12.5px;color:#b9b4b8;letter-spacing:.02em;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .hero .wrap, .split .wrap{grid-template-columns:1fr;gap:36px;}
+    .split.reverse .media{order:1;}
+    .split.reverse .content{order:2;}
+    .why-grid{grid-template-columns:repeat(2,1fr);row-gap:36px;}
+    .why-item{border-left:none;padding-left:0;}
+    .hero h1{font-size:40px;}
+  }
+  @media (max-width: 760px){
+    nav.primary-nav{
+      position:fixed;inset:64px 0 0 0;background:var(--black);
+      display:flex;justify-content:flex-start;padding:20px 28px;
+      transform:translateX(100%);transition:transform .25s ease;
+    }
+    nav.primary-nav.open{transform:translateX(0);}
+    nav.primary-nav ul{flex-direction:column;gap:6px;width:100%;}
+    nav.primary-nav a{display:block;padding:14px 4px;font-size:16px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .menu-toggle{display:block;}
+    .nav-actions .btn-solid{display:none;}
+    .role-grid{grid-template-columns:repeat(2,1fr);row-gap:26px;}
+    .why-grid{grid-template-columns:1fr;}
+    .price-line{flex-direction:column;align-items:flex-start;gap:12px;}
+    .price-line .for-list{border-left:none;padding-left:0;}
+    .cta-band h2, .tour h2, .split h2{font-size:28px;}
+    .hero h1{font-size:32px;}
+    .play-btn{position:static;transform:none;margin-top:8px;}
+    .play-btn:hover{transform:scale(1.07);}
+    .tour{min-height:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="nav-row wrap">
+    <a href="#home" class="brand">
+      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar LLC logo">
+      <span class="brand-text">
+        <div class="title">A-1 FANTASYBAR LLC</div>
+        <div class="sub">— BEAUTY SALON SUITES —</div>
+      </span>
+    </a>
+    <nav class="primary-nav" id="primaryNav">
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#suites">Suites</a></li>
+        <li><a href="#amenities">Amenities</a></li>
+        <li><a href="#virtual-tour">Virtual Tour</a></li>
+        <li><a href="#professionals">Professionals</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a href="#suites" class="btn btn-solid">View Suites</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="content">
+      <p class="eyebrow">Private Salon Suites</p>
+      <h1>For Beauty<br><span class="pink">Professionals</span></h1>
+      <p class="lede">Build Your Business. Serve Your Clients. Own Your Space.</p>
+      <p class="desc">A-1 FantasyBar LLC offers private, professional salon suites for barbers, hairstylists, estheticians, lash artists, makeup artists, and other independent beauty professionals.</p>
+      <div class="cta-row">
+        <a href="#suites" class="btn btn-solid">View Suites
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#contact" class="btn btn-outline-light">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Text Us to Reserve
+        </a>
+      </div>
+      <div class="meta-row">
+        <div class="price-block">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>
+            <span class="label" style="display:block;">Suites starting at</span>
+            <span class="amount">$190/week</span>
+          </span>
+        </div>
+        <div class="divider"></div>
+        <div class="roles">Barbers &bull; Hairstylists &bull; Estheticians<br>Lash Artists &bull; MUAs</div>
+      </div>
+    </div>
+    <div class="hero-media">
+      <div class="asset-slot">
+        <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/hero/hero-salon.jpg"
+             alt="A-1 FantasyBar salon suite interior"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="asset-missing">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <b>Hero image missing</b>
+          <span>Upload to:</span>
+          <code>public/images/hero/hero-salon.jpg</code>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar badge">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUITE RENTALS ============ -->
+<section class="split" id="suites">
+  <div class="wrap">
+    <div class="content">
+      <p class="eyebrow">Suite Rentals Available</p>
+      <h2>Your Own Suite.<span class="pink">Your Own Business.</span></h2>
+      <p class="desc">Private, professional spaces where you can operate your own beauty business and serve your own clients.</p>
+      <div class="price-line">
+        <span class="big">$190/WEEK</span>
+        <span class="for-list"><b>For:</b>Barbers &bull; Hairstylists &bull; Estheticians<br>Lash Artists &bull; MUAs</span>
+      </div>
+      <a href="#contact" class="btn btn-solid">Explore Suites
+        <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="media">
+      <div class="asset-slot">
+        <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/suites/suite-01.jpg"
+             alt="Private salon suite interior"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="asset-missing">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <b>Suite image missing</b>
+          <span>Upload to:</span>
+          <code>public/images/suites/suite-01.jpg</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDEPENDENT PROFESSIONALS ============ -->
+<section class="split reverse bg-tint" id="professionals">
+  <div class="wrap">
+    <div class="content">
+      <p class="eyebrow">Built For</p>
+      <h2 style="color:var(--near-black);">Independent Beauty<br>Professionals.</h2>
+      <p class="desc">Whether you're just starting or ready to grow, our suites give you the freedom and support you need.</p>
+      <div class="role-grid">
+        <div class="role-item">
+          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+          <span>Barbers</span>
+        </div>
+        <div class="role-item">
+          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg></div>
+          <span>Hairstylists</span>
+        </div>
+        <div class="role-item">
+          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.5c0-1 .8-2 1.5-2M15 10.5c0-1-.8-2-1.5-2"/><path d="M9 15c1 1.2 2 1.5 3 1.5s2-.3 3-1.5"/></svg></div>
+          <span>Estheticians</span>
+        </div>
+        <div class="role-item">
+          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <span>Lash Artists</span>
+        </div>
+        <div class="role-item">
+          <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M18 3l3 3-9 9-4 1 1-4 9-9z"/><path d="M4 21h16"/></svg></div>
+          <span>Makeup Artists</span>
+        </div>
+      </div>
+    </div>
+    <div class="media">
+      <div class="asset-slot">
+        <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/professionals/professional-01.jpg"
+             alt="Beauty professional working with a client"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="asset-missing">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <b>Professional photo missing</b>
+          <span>Upload to:</span>
+          <code>public/images/professionals/professional-01.jpg</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE US ============ -->
+<section class="why" id="amenities">
+  <div class="wrap">
+    <div class="why-head">
+      <p class="eyebrow">Why Choose A-1 FantasyBar?</p>
+      <h2>Everything You Need to<span class="pink">Build Your Beauty Business.</span></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Private Space</h3>
+        <p>A dedicated suite where you can work independently and create your own environment.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6M12 9v12"/></svg></div>
+        <h3>Professional Environment</h3>
+        <p>A clean, upscale setting designed to impress your clients.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <h3>Business Independence</h3>
+        <p>Operate your own business, manage your clients, and build your brand.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Flexible Suite Rental</h3>
+        <p>A simple way to establish your beauty business without a long-term commitment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIRTUAL TOUR ============ -->
+<section class="tour" id="virtual-tour">
+  <div class="tour-media">
+    <div class="asset-slot" style="width:100%;height:100%;">
+      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/gallery/virtual-tour-poster.jpg"
+           alt="A-1 FantasyBar suites"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="asset-missing" style="min-height:100%;align-items:flex-end;justify-content:flex-start;background:repeating-linear-gradient(135deg,#1a1719,#1a1719 10px,#141213 10px,#141213 20px);border:none;color:#8a838a;padding:18px 22px;gap:4px;">
+        <b style="color:#e9e5e9;font-size:11.5px;">Tour background image missing — upload to:</b>
+        <code>public/images/gallery/virtual-tour-poster.jpg</code>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow">Step Inside</p>
+    <h2>Take a Virtual Tour</h2>
+    <p>See the professional environment and beautiful suites at A-1 FantasyBar LLC.</p>
+    <a href="javascript:void(0)" class="btn btn-outline-light" onclick="document.getElementById('tourModal').classList.add('open')">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+      Watch Virtual Tour
+    </a>
+  </div>
+  <button class="play-btn" aria-label="Play virtual tour video" onclick="document.getElementById('tourModal').classList.add('open')">
+    <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor" stroke="none"/></svg>
+  </button>
+</section>
+
+<div class="video-modal" id="tourModal">
+  <div class="box">
+    <button class="close" onclick="const m=document.getElementById('tourModal'); const v=m.querySelector('video'); v.pause(); v.currentTime=0; m.classList.remove('open');">
+      <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Close
+    </button>
+    <video controls preload="none"
+      src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/videos/virtual-tour.mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<!-- ============ CTA BANNER ============ -->
+<section class="cta-band" id="contact">
+  <div class="blob"></div>
+  <h2>Ready to Build Your Beauty Business?</h2>
+  <p>Find your private suite at A-1 FantasyBar LLC.</p>
+  <a href="#suites" class="btn btn-solid">View Available Suites
+    <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="about">
+  <div class="wrap">
+    <a href="#home" class="brand">
+      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar LLC logo">
+      <span class="brand-text">
+        <div class="title">A-1 FANTASYBAR LLC</div>
+        <div class="sub">— BEAUTY SALON SUITES —</div>
+      </span>
+    </a>
+    <div class="f-right">
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg class="icon" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg class="icon" viewBox="0 0 24 24"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 3c.5 3 2.5 5 6 5.5"/></svg></a>
+      </div>
+      <span class="tagline">Professional Spaces. Independent Dreams.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('menuToggle').addEventListener('click', function(){
+    document.getElementById('primaryNav').classList.toggle('open');
+  });
+  document.querySelectorAll('#primaryNav a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('primaryNav').classList.remove('open'); });
+  });
+  document.getElementById('tourModal').addEventListener('click', function(e){
+    if(e.target === this){
+      const v = this.querySelector('video'); v.pause(); v.currentTime = 0;
+      this.classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>
