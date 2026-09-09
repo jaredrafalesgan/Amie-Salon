@@ -494,11 +494,22 @@
   .video-modal .close svg{width:20px;height:20px;}
 
   /* booking modal (GHL calendar widget) */
+  /* GHL's form_embed.js resizes the iframe to its real content height via
+     inline style once the widget loads — the calendar+form flow can end up
+     well over 1000px tall. That inline height beats any CSS height we set
+     on the iframe, so instead of fighting it we let the iframe grow to
+     whatever height it wants and make .frame (not .box, so the close
+     button outside it stays unclipped) the thing that scrolls, capped to
+     the viewport. Without this the tall content just got hard-clipped with
+     no way to scroll down to the actual form fields. */
   .booking-modal{position:fixed;inset:0;background:rgba(6,6,8,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;}
   .booking-modal.open{display:flex;}
-  .booking-modal .box{width:100%;max-width:560px;position:relative;}
-  .booking-modal .frame{background:var(--cream);border-radius:var(--r-md);overflow:hidden;box-shadow:0 40px 90px -20px rgba(0,0,0,.6);}
-  .booking-modal iframe{width:100%;height:88vh;max-height:820px;border:0;display:block;}
+  .booking-modal .box{width:100%;max-width:640px;position:relative;}
+  .booking-modal .frame{
+    background:var(--cream);border-radius:var(--r-md);box-shadow:0 40px 90px -20px rgba(0,0,0,.6);
+    max-height:88vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  }
+  .booking-modal iframe{width:100%;min-height:640px;border:0;display:block;}
   .booking-modal .close{
     position:absolute;top:-44px;right:0;background:none;border:none;color:#fff;cursor:pointer;
     font-size:15px;display:flex;align-items:center;gap:6px;
