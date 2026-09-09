@@ -45,7 +45,22 @@ like Next.js/Vite, so assets are served directly without extra build config.
   section (e.g. `hero.jpg → Hero Section`, `logo.svg → Header + Footer`) before the
   build starts.
 
+## Received assets
+
+| File | Maps to |
+|---|---|
+| `public/logo/a1-fantasybar-logo-horizontal.png` | Horizontal logo lockup — header / footer |
+| `public/logo/a1-fantasybar-logo-badge.png` | Circular badge/seal variant of the logo |
+| `public/videos/virtual-tour.mp4` | Virtual Tour section |
+| `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
+
+Still needed per the checklist above: hero image, suite/interior photos,
+professional/beauty photos, icons.
+
 ## Status
 
-Repository currently contains only the folder scaffold (`.gitkeep` placeholders,
-no real assets yet). Waiting on asset upload before the build begins.
+Logo and virtual tour video received and renamed to descriptive filenames
+(originals had auto-generated names like `Screenshot 2026-09-09 122647.png`
+from the upload). Design reference screenshot is in `/public/reference/` for
+comparison only. Still waiting on hero image, suite photos, professional
+photos, and icons before the build begins.
