@@ -412,11 +412,12 @@
   .testimonial-role{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dark);margin-top:3px;}
 
   /* ---------- Visit / Location ---------- */
-  .visit-address{display:flex;align-items:flex-start;gap:14px;margin:30px 0 36px;}
-  .visit-address svg{width:20px;height:20px;color:var(--gold);flex:none;margin-top:2px;}
-  .visit-address .addr-text{font-size:14.5px;line-height:1.75;color:var(--near-black);}
-  .text-missing{color:var(--gold-dark);font-style:italic;padding-bottom:2px;border-bottom:1px dashed var(--gold);}
-  .text-missing small{display:block;font-style:normal;font-size:11px;line-height:1.6;letter-spacing:.01em;color:var(--gray-600);margin-top:6px;border-bottom:none;}
+  .contact-list{display:flex;flex-direction:column;gap:16px;margin:30px 0 36px;}
+  .contact-list .row{display:flex;align-items:flex-start;gap:14px;}
+  .contact-list svg{width:20px;height:20px;color:var(--gold);flex:none;margin-top:1px;}
+  .contact-list .text{font-size:14.5px;line-height:1.6;color:var(--near-black);}
+  .contact-list a.text{transition:color .2s ease;}
+  .contact-list a.text:hover{color:var(--pink);}
   .visit-actions{display:flex;gap:16px;flex-wrap:wrap;}
   .media iframe{width:100%;height:100%;border:0;display:block;}
 
@@ -834,15 +835,26 @@
       <h2>Visit A-1 <span class="pink grad-text" style="display:inline;">FantasyBar</span></h2>
       <span class="heading-rule"></span>
       <p class="desc" style="margin-top:16px;">Come tour the space in person and see which suite fits your business. We're easy to find and happy to show you around.</p>
-      <div class="visit-address">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        <span class="addr-text text-missing">Add your exact street address here
-          <small>The map and directions below are already wired to the correct location — this label just needs the plain-text address to display next to it.</small>
-        </span>
+      <div class="contact-list">
+        <div class="row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span class="text">247 W Camp Wisdom Rd.<br>Dallas, TX 75116</span>
+        </div>
+        <div class="row">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a class="text" href="tel:+14694638438">(469) 463-8438</a>
+        </div>
+        <div class="row">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          <a class="text" href="mailto:A1fantasybar@gmail.com">A1fantasybar@gmail.com</a>
+        </div>
       </div>
       <div class="visit-actions">
         <a href="https://www.google.com/maps/dir/?api=1&destination=32.6628406,-96.9109352" target="_blank" rel="noopener" class="btn btn-solid">Get Directions
           <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="tel:+14694638438" class="btn btn-outline">Call Us
+          <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </a>
       </div>
     </div>

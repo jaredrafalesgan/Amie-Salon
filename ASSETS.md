@@ -58,26 +58,26 @@ like Next.js/Vite, so assets are served directly without extra build config.
 | `public/images/hero/hero-poster.png` | Hero `<video poster>` — shown briefly before the background video loads (renamed from `About image.png`) |
 | `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
 
-Still needed per the checklist above: icons.
+All planned assets are now filled — icons are handled with the site's own
+generated line-icon set (matching the brand's gold/pink line style), no
+custom icon files needed.
 
-## Business info still needed
+## Business info
 
-- **Street address** — the "Visit A-1 FantasyBar" section (`index.html`,
-  `id="visit"`) has a Google Maps embed and a working "Get Directions" button
-  already wired to the correct location (from the map embed you provided),
-  but the plain-text address label next to the map pin icon is a placeholder
-  until you send the actual mailing address.
-- **Phone number** (optional) — not currently in the site anywhere. Send it
-  if you want a click-to-call link added near the map.
+Received and live on the site (Visit A-1 FantasyBar section, `id="visit"`):
+
+- **Address:** 247 W Camp Wisdom Rd., Dallas, TX 75116
+- **Phone:** (469) 463-8438 — click-to-call link, plus a "Call Us" button
+- **Email:** A1fantasybar@gmail.com — click-to-email link
+
+The map and "Get Directions" button were already wired to the correct
+location from the embed you provided earlier; this address/phone/email are
+just the plain-text/clickable versions displayed next to them.
 
 ## Status
 
-All planned photo/video slots are now filled except icons: logo, hero
-background video (+ poster), suite video, professional photo, and virtual
-tour background video are all live, renamed to descriptive filenames from
-whatever the upload tool auto-generated. Design reference screenshot is in
-`/public/reference/` for comparison only. Still waiting on icons and the
-business street address before the build is fully finished.
+All planned photo/video slots and business info are filled in. Design
+reference screenshot is in `/public/reference/` for comparison only.
 
 Testimonials section currently uses sample/placeholder reviews (clearly
 marked in `index.html` with `<!-- SAMPLE TESTIMONIALS — REPLACE WITH REAL
