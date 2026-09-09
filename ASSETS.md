@@ -54,25 +54,11 @@ like Next.js/Vite, so assets are served directly without extra build config.
 | `public/videos/virtual-tour.mp4` | Virtual Tour section (also reused as the hero's full-bleed background video) |
 | `public/images/suites/suite-01.mp4` | Suite Rentals section — used as a looping video instead of a static photo, per your request |
 | `public/images/gallery/virtual-tour-bg.mp4` | Virtual Tour section's background — looping video behind the dark overlay, instead of a static poster photo |
+| `public/images/professionals/professional-01.jpg` | Independent Professionals section photo (renamed from `Gemini_Generated_Image_....jpg`) |
+| `public/images/hero/hero-poster.png` | Hero `<video poster>` — shown briefly before the background video loads (renamed from `About image.png`) |
 | `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
 
-Still needed per the checklist above: professional/beauty photos, icons.
-(Hero image is now optional — see the note above. Suite photo is now a video,
-see above.)
-
-Two files from your last upload aren't wired in yet — flagging rather than guessing:
-
-- **`public/images/professionals/Gemini_Generated_Image_dtqxxwdtqxxwdtqx.jpg`**
-  — its filename indicates it was AI-generated (Google Gemini). Per your
-  original instructions ("do not generate replacement images... I will
-  provide the actual images"), I haven't used it as the Professionals
-  section photo. If it's actually a real photo you just downloaded through
-  a tool called Gemini, let me know and I'll wire it in; otherwise send the
-  real photo.
-- **`public/images/hero/About image.png`** — a portrait-style photo. The
-  filename suggests it's meant for an "About" section, but the site
-  doesn't currently have one (the nav's "About" link points to the
-  footer). Let me know what this image is for and I'll place it correctly.
+Still needed per the checklist above: icons.
 
 ## Business info still needed
 
@@ -86,12 +72,12 @@ Two files from your last upload aren't wired in yet — flagging rather than gue
 
 ## Status
 
-Logo and virtual tour video received and renamed to descriptive filenames
-(originals had auto-generated names like `Screenshot 2026-09-09 122647.png`
-from the upload). Design reference screenshot is in `/public/reference/` for
-comparison only. Still waiting on hero image, suite photos, professional
-photos, icons, and the business street address before the build is fully
-finished.
+All planned photo/video slots are now filled except icons: logo, hero
+background video (+ poster), suite video, professional photo, and virtual
+tour background video are all live, renamed to descriptive filenames from
+whatever the upload tool auto-generated. Design reference screenshot is in
+`/public/reference/` for comparison only. Still waiting on icons and the
+business street address before the build is fully finished.
 
 Testimonials section currently uses sample/placeholder reviews (clearly
 marked in `index.html` with `<!-- SAMPLE TESTIMONIALS — REPLACE WITH REAL
