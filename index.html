@@ -208,6 +208,17 @@
      nothing but plain page background behind it to blur (reads as a flat
      light bar instead of glass). The hero's top padding below compensates
      for the space this no longer reserves. */
+  /* left:0;right:0 (not width/margin) is deliberate: for position:fixed,
+     these resolve against the true viewport as long as no ancestor sets
+     transform/filter/perspective (which would make position:fixed relative
+     to that ancestor instead — a hard CSS limitation nothing here can
+     override). Tested this against width:100vw + margin-left:calc(50% -
+     50vw) as an alternative and it's actually worse: fixed elements with
+     auto left/right fall back to a "static position" based on where they'd
+     sit in the constraining wrapper's normal flow, so the margin trick
+     computed to zero and the header ended up full-width but shifted off
+     one edge instead of centered. left:0;right:0 is the correct approach
+     here for the common case of a page-builder "boxed" width wrapper. */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     border-bottom:1px solid rgba(198,161,91,.16);
@@ -257,7 +268,7 @@
      never flashes up before the video does. Her photo is a composition
      element beside the text, not a boxed card: mask-faded at the edges
      into a large soft radial glow so she reads as part of the scene. */
-  .hero{position:relative;background:var(--black);color:#fff;padding:190px 0 100px;overflow:hidden;min-height:92vh;display:flex;align-items:center;}
+  .hero{position:relative;background:var(--black);color:#fff;padding:190px 0 100px;overflow:hidden;min-height:92vh;display:flex;align-items:center;width:100vw;margin-left:calc(50% - 50vw);}
   .hero-bg{position:absolute;inset:0;overflow:hidden;background:var(--black);}
   .hero-bg video{
     position:absolute;top:50%;left:50%;width:100%;height:100%;min-width:100%;min-height:100%;
@@ -332,7 +343,7 @@
   }
 
   /* ---------- Two-column content sections ---------- */
-  .split{position:relative;padding:112px 0;overflow:hidden;background:
+  .split{position:relative;padding:112px 0;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);background:
     radial-gradient(circle at 12% 15%, rgba(236,30,120,.05), transparent 40%),
     radial-gradient(circle at 92% 85%, rgba(198,161,91,.07), transparent 42%),
     var(--cream);
@@ -374,7 +385,7 @@
 
   /* ---------- Why choose us ---------- */
   .why{
-    position:relative;padding:120px 0;overflow:hidden;
+    position:relative;padding:120px 0;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);
     background:
       radial-gradient(circle at 85% 8%, rgba(236,30,120,.06), transparent 40%),
       radial-gradient(circle at 10% 95%, rgba(198,161,91,.09), transparent 45%),
@@ -406,7 +417,7 @@
 
   /* ---------- Testimonials ---------- */
   .testimonials{
-    position:relative;padding:120px 0;overflow:hidden;
+    position:relative;padding:120px 0;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);
     background:
       radial-gradient(circle at 15% 12%, rgba(198,161,91,.06), transparent 42%),
       radial-gradient(circle at 90% 88%, rgba(236,30,120,.05), transparent 45%),
@@ -461,7 +472,7 @@
   .media iframe{width:100%;height:100%;border:0;display:block;}
 
   /* ---------- Virtual tour ---------- */
-  .tour{position:relative;color:#fff;min-height:520px;display:flex;align-items:center;overflow:hidden;background:var(--black);}
+  .tour{position:relative;color:#fff;min-height:520px;display:flex;align-items:center;overflow:hidden;background:var(--black);width:100vw;margin-left:calc(50% - 50vw);}
   .tour .tour-media{position:absolute;inset:0;}
   .tour .tour-media video{width:100%;height:100%;object-fit:cover;opacity:.55;}
   .tour::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.35) 100%);}
@@ -517,7 +528,7 @@
   .booking-modal .close svg{width:20px;height:20px;}
 
   /* ---------- CTA banner ---------- */
-  .cta-band{position:relative;background:var(--black);color:#fff;text-align:center;padding:130px 28px;overflow:hidden;}
+  .cta-band{position:relative;background:var(--black);color:#fff;text-align:center;padding:130px 28px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);}
   .cta-band .orb{opacity:.6;}
   .cta-band h2{font-size:36px;font-weight:700;margin-bottom:12px;position:relative;}
   .cta-band p{color:#c9c2b8;font-weight:300;font-size:15px;margin:0 0 34px;position:relative;}
@@ -526,7 +537,7 @@
   /* ---------- Footer ---------- */
   footer{
     position:relative;overflow:hidden;color:#fff;padding:44px 0;border-top:1px solid rgba(198,161,91,.18);
-    background:var(--black);
+    background:var(--black);width:100vw;margin-left:calc(50% - 50vw);
   }
   footer .orb{opacity:.3;}
   footer .wrap{position:relative;z-index:1;}
