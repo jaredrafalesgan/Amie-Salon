@@ -29,7 +29,7 @@
     --container: 1180px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;overflow-x:hidden;}
+  html{scroll-behavior:smooth;overflow-x:hidden;scroll-padding-top:84px;}
   body{
     margin:0;
     font-family:var(--sans);
@@ -173,8 +173,15 @@
   }
 
   /* ---------- Header ---------- */
+  /* position:fixed (not sticky) so the header never reserves its own layout
+     space — it overlaps the hero from the very first pixel, which is what
+     lets the glass/blur effect actually show the hero through it at rest.
+     Sticky would sit in normal flow until scrolled, so at rest there'd be
+     nothing but plain page background behind it to blur (reads as a flat
+     light bar instead of glass). The hero's top padding below compensates
+     for the space this no longer reserves. */
   header{
-    position:sticky;top:0;z-index:100;
+    position:fixed;top:0;left:0;right:0;z-index:100;
     border-bottom:1px solid rgba(198,161,91,.16);
     transition:border-color .4s ease, box-shadow .4s ease;
   }
@@ -215,7 +222,7 @@
   .menu-toggle.open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- Hero ---------- */
-  .hero{position:relative;background:var(--black);color:#fff;padding:78px 0 56px;overflow:hidden;}
+  .hero{position:relative;background:var(--black);color:#fff;padding:150px 0 56px;overflow:hidden;}
   .hero::before{
     content:"";position:absolute;top:-25%;left:-12%;width:62%;height:85%;
     background:radial-gradient(circle, rgba(236,30,120,.15), transparent 65%);
