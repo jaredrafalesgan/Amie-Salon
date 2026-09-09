@@ -285,12 +285,23 @@
   .hero .meta-row .price-block .amount{font-family:var(--serif);font-weight:700;font-size:17px;color:#fff;}
   .hero .meta-row .divider{width:1px;height:34px;background:rgba(255,255,255,.18);}
   .hero .meta-row .roles{font-size:10.5px;letter-spacing:.08em;color:#c9c2b8;line-height:1.8;text-transform:uppercase;}
+  /* Floating photo card on the right — a distinct, visible still image
+     layered on top of the full-bleed video, not just a poster frame that
+     disappears once the video starts playing. */
+  .hero-photo{
+    position:absolute;z-index:2;top:50%;right:clamp(24px,5vw,90px);transform:translateY(-50%);
+    width:clamp(240px,24vw,360px);aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;
+    box-shadow:0 34px 80px -20px rgba(0,0,0,.65), 0 0 0 1px rgba(198,161,91,.3);
+    opacity:0;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .5s forwards;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;}
   .hero-badge{
-    position:absolute;top:150px;right:max(4%, 28px);width:72px;height:72px;border-radius:50%;z-index:3;
+    position:absolute;top:16px;right:16px;width:66px;height:66px;border-radius:50%;z-index:3;
     overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.5);border:2px solid var(--gold-light);
     animation:floatY 5s ease-in-out infinite;
   }
   .hero-badge img{width:100%;height:100%;object-fit:cover;}
+  @media (max-width:1150px){ .hero-photo{display:none;} }
 
   /* ---------- Two-column content sections ---------- */
   .split{position:relative;padding:112px 0;overflow:hidden;background:
@@ -560,8 +571,11 @@
   </div>
   <div class="orb orb-pink orb-1"></div>
   <div class="orb orb-gold orb-2"></div>
-  <div class="hero-badge">
-    <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar badge">
+  <div class="hero-photo">
+    <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/hero/hero-poster.png" alt="A-1 FantasyBar LLC">
+    <div class="hero-badge">
+      <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/logo/a1-fantasybar-logo-badge.png" alt="A-1 FantasyBar badge">
+    </div>
   </div>
   <div class="wrap">
     <div class="content hero-enter">
