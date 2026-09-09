@@ -27,7 +27,7 @@ like Next.js/Vite, so assets are served directly without extra build config.
 | # | Asset | Upload path |
 |---|-------|-------------|
 | 1 | Logo | `/public/logo/` (e.g. `public/logo/amie-salon-logo.svg`) |
-| 2 | Hero image | `/public/images/hero/` (e.g. `public/images/hero/hero-salon.jpg`) |
+| 2 | Hero image *(optional)* | `/public/images/hero/` (e.g. `public/images/hero/hero-salon.jpg`) — the hero now plays the virtual tour video as a full-bleed cinematic background; this image is only used as the `<video poster>` shown for a moment before the video loads |
 | 3 | Suite / interior images | `/public/images/suites/` (e.g. `public/images/suites/suite-01.jpg`) |
 | 4 | Professional / beauty images | `/public/images/professionals/` (e.g. `public/images/professionals/professional-01.jpg`) |
 | 5 | Virtual tour video | `/public/videos/` (e.g. `public/videos/virtual-tour.mp4`) |
@@ -54,8 +54,8 @@ like Next.js/Vite, so assets are served directly without extra build config.
 | `public/videos/virtual-tour.mp4` | Virtual Tour section |
 | `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
 
-Still needed per the checklist above: hero image, suite/interior photos,
-professional/beauty photos, icons.
+Still needed per the checklist above: suite/interior photos, professional/beauty
+photos, icons. (Hero image is now optional — see the note above.)
 
 ## Business info still needed
 
