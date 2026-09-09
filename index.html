@@ -48,6 +48,7 @@
   }
   h1,h2,h3{font-family:var(--serif);margin:0;line-height:1.08;}
   .btn{
+    position:relative;
     display:inline-flex;
     align-items:center;
     gap:8px;
@@ -58,17 +59,68 @@
     border-radius:40px;
     border:1.5px solid transparent;
     cursor:pointer;
-    transition:transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+    overflow:hidden;
+    transition:transform .2s cubic-bezier(.22,1,.36,1), background .2s ease, color .2s ease, border-color .2s ease, box-shadow .3s ease;
     white-space:nowrap;
   }
-  .btn:hover{transform:translateY(-1px);}
-  .btn-solid{background:var(--pink);color:#fff;}
-  .btn-solid:hover{background:var(--pink-dark);}
+  .btn::before{
+    content:"";position:absolute;top:0;left:0;width:36%;height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,.35), transparent);
+    transform:translateX(-130%) skewX(-15deg);pointer-events:none;
+  }
+  .btn:hover::before{animation:shine .85s ease forwards;}
+  .btn svg{transition:transform .25s cubic-bezier(.22,1,.36,1);}
+  .btn:hover svg{transform:translateX(3px);}
+  .btn:hover{transform:translateY(-2px);}
+  .btn:active{transform:translateY(0);}
+  .btn-solid{background:var(--pink);color:#fff;box-shadow:0 6px 18px rgba(236,30,120,.28);}
+  .btn-solid:hover{background:var(--pink-dark);box-shadow:0 10px 26px rgba(236,30,120,.42);}
   .btn-outline{background:transparent;border-color:var(--pink);color:var(--pink);}
-  .btn-outline:hover{background:var(--pink);color:#fff;}
+  .btn-outline:hover{background:var(--pink);color:#fff;box-shadow:0 8px 22px rgba(236,30,120,.3);}
   .btn-outline-light{background:transparent;border-color:rgba(255,255,255,.55);color:#fff;}
-  .btn-outline-light:hover{background:#fff;color:var(--black);border-color:#fff;}
+  .btn-outline-light:hover{background:#fff;color:var(--black);border-color:#fff;box-shadow:0 8px 22px rgba(255,255,255,.15);}
   .icon{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ---------- Motion system ---------- */
+  .grad-text{
+    background:linear-gradient(100deg, var(--pink) 10%, #ff5fa8 55%, var(--pink) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .heading-rule{
+    display:inline-block; height:3px; width:0; border-radius:3px; margin-top:14px;
+    background:linear-gradient(90deg, var(--pink), #ff8fc0);
+    transition:width .9s cubic-bezier(.22,1,.36,1) .15s;
+  }
+  .why-head .heading-rule, .tour .heading-rule{margin-left:auto;margin-right:auto;}
+  .reveal.in-view .heading-rule, .hero-enter .heading-rule{width:64px;}
+
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); transition-delay:var(--rd,0s);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-scale{opacity:0; transform:scale(.94); transition:opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1); transition-delay:var(--rd,0s);}
+  .reveal-scale.in-view{opacity:1; transform:scale(1);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal, .reveal-scale, .heading-rule, .hero-enter *{
+      opacity:1 !important; transform:none !important; width:auto !important; transition:none !important; animation:none !important;
+    }
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+  }
+  noscript .reveal, noscript .reveal-scale{opacity:1;transform:none;}
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes floatY{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+  @keyframes pulseRing{ 0%{transform:scale(.85); opacity:.55;} 100%{transform:scale(1.6); opacity:0;} }
+  @keyframes drift{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-18px,-14px) scale(1.08);} }
+  @keyframes shine{ 0%{transform:translateX(-130%) skewX(-15deg);} 100%{transform:translateX(230%) skewX(-15deg);} }
+
+  .hero-enter > *{opacity:0; animation:fadeUp .8s cubic-bezier(.22,1,.36,1) forwards;}
+  .hero-enter > *:nth-child(1){animation-delay:.05s;}
+  .hero-enter > *:nth-child(2){animation-delay:.16s;}
+  .hero-enter > *:nth-child(3){animation-delay:.27s;}
+  .hero-enter > *:nth-child(4){animation-delay:.38s;}
+  .hero-enter > *:nth-child(5){animation-delay:.49s;}
+  .hero-enter > *:nth-child(6){animation-delay:.6s;}
 
   /* --- asset placeholder (shown only when an uploaded image is missing) --- */
   .asset-slot{position:relative;width:100%;height:100%;}
@@ -104,25 +156,50 @@
   /* ---------- Header ---------- */
   header{
     position:sticky;top:0;z-index:100;
-    background:rgba(12,12,14,.92);
-    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    transition:border-color .3s ease, box-shadow .3s ease;
   }
-  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;gap:20px;}
+  /* backdrop-filter lives on a pseudo layer, not on header itself — a filter on
+     header would create a CSS containing block for the fixed mobile nav below,
+     collapsing its inset:0 positioning down to header's own (tiny) box. */
+  header::before{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:rgba(12,12,14,.8);backdrop-filter:blur(8px);
+    transition:background .3s ease;
+  }
+  header.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.35);border-color:rgba(255,255,255,.1);}
+  header.scrolled::before{background:rgba(12,12,14,.97);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;gap:20px;transition:padding .3s ease;}
+  header.scrolled .nav-row{padding:10px 28px;}
   .brand{display:flex;align-items:center;gap:12px;color:#fff;}
-  .brand-logo{height:40px;width:auto;}
+  .brand-logo{height:40px;width:auto;transition:height .3s ease;}
+  header.scrolled .brand-logo{height:34px;}
   nav.primary-nav ul{display:flex;gap:30px;}
   nav.primary-nav a{
-    color:#e9e7ea;font-size:14px;font-weight:500;padding:6px 2px;border-bottom:2px solid transparent;
-    transition:color .15s ease, border-color .15s ease;
+    position:relative;color:#e9e7ea;font-size:14px;font-weight:500;padding:6px 2px;
+    transition:color .2s ease;
   }
-  nav.primary-nav a:hover, nav.primary-nav a.active{color:#fff;border-color:var(--pink);}
+  nav.primary-nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--pink);
+    transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.22,1,.36,1);
+  }
+  nav.primary-nav a:hover{color:#fff;}
+  nav.primary-nav a:hover::after, nav.primary-nav a.active::after{transform:scaleX(1);}
   .nav-actions{display:flex;align-items:center;gap:16px;}
-  .menu-toggle{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px;}
-  .menu-toggle svg{width:26px;height:26px;}
+  .menu-toggle{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px;width:32px;height:32px;}
+  .menu-toggle .bar{display:block;width:22px;height:2px;background:#fff;margin:5px auto;border-radius:2px;transition:transform .3s cubic-bezier(.22,1,.36,1), opacity .2s ease;}
+  .menu-toggle.open .bar:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-toggle.open .bar:nth-child(2){opacity:0;}
+  .menu-toggle.open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- Hero ---------- */
-  .hero{background:var(--black);color:#fff;padding:64px 0 46px;}
-  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
+  .hero{position:relative;background:var(--black);color:#fff;padding:64px 0 46px;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;top:-20%;left:-10%;width:60%;height:80%;
+    background:radial-gradient(circle, rgba(236,30,120,.16), transparent 65%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
   .hero h1{font-size:52px;font-weight:700;margin-bottom:18px;}
   .hero h1 .pink{color:var(--pink);}
   .hero .lede{font-family:var(--sans);font-weight:600;font-size:17px;color:#fff;margin:0 0 14px;}
@@ -135,12 +212,19 @@
   .hero .meta-row .price-block .amount{font-weight:700;font-size:15px;}
   .hero .meta-row .divider{width:1px;height:34px;background:rgba(255,255,255,.16);}
   .hero .meta-row .roles{font-size:11.5px;letter-spacing:.05em;color:#c7c2c6;line-height:1.7;text-transform:uppercase;}
-  .hero-media{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3.1;background:#1c1a1c;}
+  .hero-media{
+    position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3.1;background:#1c1a1c;
+    opacity:0;transform:translateX(24px) scale(.97);
+    animation:fadeUp .9s cubic-bezier(.22,1,.36,1) .35s forwards;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+  }
   .hero-media .asset-slot img, .hero-media .asset-missing{border-radius:18px;}
-  .hero-media img{width:100%;height:100%;object-fit:cover;}
+  .hero-media img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.22,1,.36,1);}
+  .hero-media:hover img{transform:scale(1.05);}
   .hero-badge{
     position:absolute;top:20px;right:20px;width:64px;height:64px;border-radius:50%;
     overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.15);
+    animation:floatY 4s ease-in-out infinite;
   }
   .hero-badge img{width:100%;height:100%;object-fit:cover;}
 
@@ -157,18 +241,22 @@
   .price-line .big{font-family:var(--serif);font-weight:800;font-size:34px;color:var(--pink);}
   .price-line .for-list{font-size:12.5px;line-height:1.7;color:var(--gray-600);border-left:1px solid #e2dde0;padding-left:16px;}
   .price-line .for-list b{color:var(--near-black);display:block;font-weight:600;margin-bottom:2px;}
-  .media{border-radius:18px;overflow:hidden;aspect-ratio:4/3.3;}
+  .media{border-radius:18px;overflow:hidden;aspect-ratio:4/3.3;box-shadow:0 24px 50px -24px rgba(20,15,18,.35);}
   .media .asset-slot, .media img, .media .asset-missing{width:100%;height:100%;border-radius:18px;}
-  .media img{object-fit:cover;}
+  .media img{object-fit:cover;transition:transform .7s cubic-bezier(.22,1,.36,1);}
+  .media:hover img{transform:scale(1.05);}
   .bg-tint{background:var(--gray-100);}
+  .count-up{font-variant-numeric:tabular-nums;}
 
   /* profession icon row */
   .role-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:8px;}
-  .role-item{text-align:center;}
+  .role-item{text-align:center;cursor:default;}
   .role-item .icon-circle{
     width:56px;height:56px;border-radius:50%;border:1.5px solid var(--pink);
     display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--pink);
+    transition:background .25s ease, color .25s ease, transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s ease;
   }
+  .role-item:hover .icon-circle{background:var(--pink);color:#fff;transform:translateY(-4px) scale(1.06);box-shadow:0 10px 22px rgba(236,30,120,.32);}
   .role-item .icon-circle svg{width:24px;height:24px;}
   .role-item span{font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--near-black);}
 
@@ -178,9 +266,14 @@
   .why-head h2{font-size:36px;font-weight:700;}
   .why-head h2 .pink{color:var(--pink);display:block;}
   .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
-  .why-item{padding:0 26px;border-left:1px solid #e2dde0;}
+  .why-item{
+    padding:22px 26px;border-left:1px solid #e2dde0;border-radius:14px;
+    transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, background .3s ease;
+  }
   .why-item:first-child{border-left:none;padding-left:0;}
-  .why-item .icon-badge{width:40px;height:40px;color:var(--pink);margin-bottom:18px;}
+  .why-item:hover{transform:translateY(-6px);box-shadow:0 20px 40px -22px rgba(20,15,18,.28);background:#fff;}
+  .why-item .icon-badge{width:40px;height:40px;color:var(--pink);margin-bottom:18px;transition:transform .3s cubic-bezier(.22,1,.36,1);}
+  .why-item:hover .icon-badge{transform:scale(1.12) rotate(-4deg);}
   .why-item .icon-badge svg{width:100%;height:100%;}
   .why-item h3{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;}
   .why-item p{font-size:13.5px;color:var(--gray-600);line-height:1.7;margin:0;}
@@ -200,8 +293,13 @@
     border:1.5px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;
     cursor:pointer;backdrop-filter:blur(2px);transition:transform .2s ease, background .2s ease;
   }
+  .play-btn::before, .play-btn::after{
+    content:"";position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);
+    animation:pulseRing 2.4s cubic-bezier(.22,.61,.36,1) infinite;
+  }
+  .play-btn::after{animation-delay:1.2s;}
   .play-btn:hover{transform:translateY(-50%) scale(1.07);background:rgba(255,255,255,.24);}
-  .play-btn svg{width:28px;height:28px;color:#fff;margin-left:4px;}
+  .play-btn svg{position:relative;width:28px;height:28px;color:#fff;margin-left:4px;}
 
   /* video modal */
   .video-modal{position:fixed;inset:0;background:rgba(6,6,8,.92);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;}
@@ -220,6 +318,7 @@
     position:absolute;right:-80px;bottom:-100px;width:420px;height:420px;
     background:radial-gradient(circle at 30% 30%, var(--pink), transparent 70%);
     opacity:.35;filter:blur(10px);
+    animation:drift 9s ease-in-out infinite;
   }
   .cta-band h2{font-size:34px;font-weight:700;margin-bottom:10px;position:relative;}
   .cta-band p{color:#b9b4b8;font-size:15px;margin:0 0 30px;position:relative;}
@@ -234,9 +333,10 @@
   .socials{display:flex;gap:14px;}
   .socials a{
     width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
-    display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s ease,border-color .2s ease;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    transition:background .2s ease,border-color .2s ease,transform .2s cubic-bezier(.22,1,.36,1);
   }
-  .socials a:hover{background:var(--pink);border-color:var(--pink);}
+  .socials a:hover{background:var(--pink);border-color:var(--pink);transform:translateY(-3px);}
   .socials svg{width:15px;height:15px;}
   footer .tagline{font-size:12.5px;color:#b9b4b8;letter-spacing:.02em;}
 
@@ -266,7 +366,7 @@
     .price-line .for-list{border-left:none;padding-left:0;}
     .cta-band h2, .tour h2, .split h2{font-size:28px;}
     .hero h1{font-size:32px;}
-    .play-btn{position:static;transform:none;margin-top:8px;}
+    .play-btn{position:relative;top:auto;right:auto;transform:none;margin:8px auto 0;}
     .play-btn:hover{transform:scale(1.07);}
     .tour{min-height:0;}
   }
@@ -294,7 +394,7 @@
     <div class="nav-actions">
       <a href="#suites" class="btn btn-solid">View Suites</a>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-        <svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
       </button>
     </div>
   </div>
@@ -303,9 +403,9 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="home">
   <div class="wrap">
-    <div class="content">
+    <div class="content hero-enter">
       <p class="eyebrow">Private Salon Suites</p>
-      <h1>For Beauty<br><span class="pink">Professionals</span></h1>
+      <h1>For Beauty<br><span class="pink grad-text">Professionals</span></h1>
       <p class="lede">Build Your Business. Serve Your Clients. Own Your Space.</p>
       <p class="desc">A-1 FantasyBar LLC offers private, professional salon suites for barbers, hairstylists, estheticians, lash artists, makeup artists, and other independent beauty professionals.</p>
       <div class="cta-row">
@@ -322,7 +422,7 @@
           <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span>
             <span class="label" style="display:block;">Suites starting at</span>
-            <span class="amount">$190/week</span>
+            <span class="amount">$<span class="count-up" data-count-to="190">0</span>/week</span>
           </span>
         </div>
         <div class="divider"></div>
@@ -351,19 +451,20 @@
 <!-- ============ SUITE RENTALS ============ -->
 <section class="split" id="suites">
   <div class="wrap">
-    <div class="content">
+    <div class="content reveal" style="--rd:0s;">
       <p class="eyebrow">Suite Rentals Available</p>
       <h2>Your Own Suite.<span class="pink">Your Own Business.</span></h2>
-      <p class="desc">Private, professional spaces where you can operate your own beauty business and serve your own clients.</p>
+      <span class="heading-rule"></span>
+      <p class="desc" style="margin-top:16px;">Private, professional spaces where you can operate your own beauty business and serve your own clients.</p>
       <div class="price-line">
-        <span class="big">$190/WEEK</span>
+        <span class="big">$<span class="count-up" data-count-to="190">0</span>/WEEK</span>
         <span class="for-list"><b>For:</b>Barbers &bull; Hairstylists &bull; Estheticians<br>Lash Artists &bull; MUAs</span>
       </div>
       <a href="#contact" class="btn btn-solid">Explore Suites
         <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
-    <div class="media">
+    <div class="media reveal-scale" style="--rd:.15s;">
       <div class="asset-slot">
         <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/suites/suite-01.jpg"
              alt="Private salon suite interior"
@@ -382,34 +483,35 @@
 <!-- ============ INDEPENDENT PROFESSIONALS ============ -->
 <section class="split reverse bg-tint" id="professionals">
   <div class="wrap">
-    <div class="content">
+    <div class="content reveal" style="--rd:0s;">
       <p class="eyebrow">Built For</p>
       <h2 style="color:var(--near-black);">Independent Beauty<br>Professionals.</h2>
-      <p class="desc">Whether you're just starting or ready to grow, our suites give you the freedom and support you need.</p>
+      <span class="heading-rule"></span>
+      <p class="desc" style="margin-top:16px;">Whether you're just starting or ready to grow, our suites give you the freedom and support you need.</p>
       <div class="role-grid">
-        <div class="role-item">
+        <div class="role-item reveal" style="--rd:.05s;">
           <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
           <span>Barbers</span>
         </div>
-        <div class="role-item">
+        <div class="role-item reveal" style="--rd:.12s;">
           <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg></div>
           <span>Hairstylists</span>
         </div>
-        <div class="role-item">
+        <div class="role-item reveal" style="--rd:.19s;">
           <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 10.5c0-1 .8-2 1.5-2M15 10.5c0-1-.8-2-1.5-2"/><path d="M9 15c1 1.2 2 1.5 3 1.5s2-.3 3-1.5"/></svg></div>
           <span>Estheticians</span>
         </div>
-        <div class="role-item">
+        <div class="role-item reveal" style="--rd:.26s;">
           <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <span>Lash Artists</span>
         </div>
-        <div class="role-item">
+        <div class="role-item reveal" style="--rd:.33s;">
           <div class="icon-circle"><svg class="icon" viewBox="0 0 24 24"><path d="M18 3l3 3-9 9-4 1 1-4 9-9z"/><path d="M4 21h16"/></svg></div>
           <span>Makeup Artists</span>
         </div>
       </div>
     </div>
-    <div class="media">
+    <div class="media reveal-scale" style="--rd:.15s;">
       <div class="asset-slot">
         <img src="https://raw.githubusercontent.com/jaredrafalesgan/Amie-Salon/claude/repo-asset-setup-i8cy81/public/images/professionals/professional-01.jpg"
              alt="Beauty professional working with a client"
@@ -428,27 +530,28 @@
 <!-- ============ WHY CHOOSE US ============ -->
 <section class="why" id="amenities">
   <div class="wrap">
-    <div class="why-head">
+    <div class="why-head reveal" style="--rd:0s;">
       <p class="eyebrow">Why Choose A-1 FantasyBar?</p>
       <h2>Everything You Need to<span class="pink">Build Your Beauty Business.</span></h2>
+      <span class="heading-rule"></span>
     </div>
     <div class="why-grid">
-      <div class="why-item">
+      <div class="why-item reveal" style="--rd:0s;">
         <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
         <h3>Private Space</h3>
         <p>A dedicated suite where you can work independently and create your own environment.</p>
       </div>
-      <div class="why-item">
+      <div class="why-item reveal" style="--rd:.08s;">
         <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6M12 9v12"/></svg></div>
         <h3>Professional Environment</h3>
         <p>A clean, upscale setting designed to impress your clients.</p>
       </div>
-      <div class="why-item">
+      <div class="why-item reveal" style="--rd:.16s;">
         <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
         <h3>Business Independence</h3>
         <p>Operate your own business, manage your clients, and build your brand.</p>
       </div>
-      <div class="why-item">
+      <div class="why-item reveal" style="--rd:.24s;">
         <div class="icon-badge"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <h3>Flexible Suite Rental</h3>
         <p>A simple way to establish your beauty business without a long-term commitment.</p>
@@ -470,7 +573,7 @@
       </div>
     </div>
   </div>
-  <div class="wrap">
+  <div class="wrap reveal" style="--rd:0s;">
     <p class="eyebrow">Step Inside</p>
     <h2>Take a Virtual Tour</h2>
     <p>See the professional environment and beautiful suites at A-1 FantasyBar LLC.</p>
@@ -500,11 +603,13 @@
 <!-- ============ CTA BANNER ============ -->
 <section class="cta-band" id="contact">
   <div class="blob"></div>
-  <h2>Ready to Build Your Beauty Business?</h2>
-  <p>Find your private suite at A-1 FantasyBar LLC.</p>
-  <a href="#suites" class="btn btn-solid">View Available Suites
-    <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-  </a>
+  <div class="reveal" style="--rd:0s;">
+    <h2>Ready to Build Your Beauty Business?</h2>
+    <p>Find your private suite at A-1 FantasyBar LLC.</p>
+    <a href="#suites" class="btn btn-solid">View Available Suites
+      <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
@@ -525,11 +630,17 @@
 </footer>
 
 <script>
-  document.getElementById('menuToggle').addEventListener('click', function(){
-    document.getElementById('primaryNav').classList.toggle('open');
+  var menuToggle = document.getElementById('menuToggle');
+  var primaryNav = document.getElementById('primaryNav');
+  menuToggle.addEventListener('click', function(){
+    primaryNav.classList.toggle('open');
+    menuToggle.classList.toggle('open');
   });
   document.querySelectorAll('#primaryNav a').forEach(function(a){
-    a.addEventListener('click', function(){ document.getElementById('primaryNav').classList.remove('open'); });
+    a.addEventListener('click', function(){
+      primaryNav.classList.remove('open');
+      menuToggle.classList.remove('open');
+    });
   });
   document.getElementById('tourModal').addEventListener('click', function(e){
     if(e.target === this){
@@ -537,6 +648,58 @@
       this.classList.remove('open');
     }
   });
+
+  // sticky header shrink/blur on scroll
+  var header = document.querySelector('header');
+  var onScroll = function(){
+    header.classList.toggle('scrolled', window.scrollY > 12);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll-triggered reveal animations
+  var revealEls = document.querySelectorAll('.reveal, .reveal-scale');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  } else {
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  }
+
+  // count-up numbers (e.g. $190/week) once visible
+  var countEls = document.querySelectorAll('.count-up');
+  function runCount(el){
+    var target = parseInt(el.getAttribute('data-count-to'), 10) || 0;
+    if (reduceMotion) { el.textContent = target; return; }
+    var start = null, duration = 1100;
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var countObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { runCount(entry.target); countObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+    countEls.forEach(function(el){ countObserver.observe(el); });
+  } else {
+    countEls.forEach(function(el){ el.textContent = el.getAttribute('data-count-to'); });
+  }
 </script>
 </body>
 </html>
