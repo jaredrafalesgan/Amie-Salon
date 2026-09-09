@@ -51,11 +51,28 @@ like Next.js/Vite, so assets are served directly without extra build config.
 |---|---|
 | `public/logo/a1-fantasybar-logo-horizontal.png` | Horizontal logo lockup — header / footer |
 | `public/logo/a1-fantasybar-logo-badge.png` | Circular badge/seal variant of the logo |
-| `public/videos/virtual-tour.mp4` | Virtual Tour section |
+| `public/videos/virtual-tour.mp4` | Virtual Tour section (also reused as the hero's full-bleed background video) |
+| `public/images/suites/suite-01.mp4` | Suite Rentals section — used as a looping video instead of a static photo, per your request |
+| `public/images/gallery/virtual-tour-bg.mp4` | Virtual Tour section's background — looping video behind the dark overlay, instead of a static poster photo |
 | `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
 
-Still needed per the checklist above: suite/interior photos, professional/beauty
-photos, icons. (Hero image is now optional — see the note above.)
+Still needed per the checklist above: professional/beauty photos, icons.
+(Hero image is now optional — see the note above. Suite photo is now a video,
+see above.)
+
+Two files from your last upload aren't wired in yet — flagging rather than guessing:
+
+- **`public/images/professionals/Gemini_Generated_Image_dtqxxwdtqxxwdtqx.jpg`**
+  — its filename indicates it was AI-generated (Google Gemini). Per your
+  original instructions ("do not generate replacement images... I will
+  provide the actual images"), I haven't used it as the Professionals
+  section photo. If it's actually a real photo you just downloaded through
+  a tool called Gemini, let me know and I'll wire it in; otherwise send the
+  real photo.
+- **`public/images/hero/About image.png`** — a portrait-style photo. The
+  filename suggests it's meant for an "About" section, but the site
+  doesn't currently have one (the nav's "About" link points to the
+  footer). Let me know what this image is for and I'll place it correctly.
 
 ## Business info still needed
 
