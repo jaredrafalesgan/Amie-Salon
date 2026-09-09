@@ -57,10 +57,26 @@ like Next.js/Vite, so assets are served directly without extra build config.
 Still needed per the checklist above: hero image, suite/interior photos,
 professional/beauty photos, icons.
 
+## Business info still needed
+
+- **Street address** — the "Visit A-1 FantasyBar" section (`index.html`,
+  `id="visit"`) has a Google Maps embed and a working "Get Directions" button
+  already wired to the correct location (from the map embed you provided),
+  but the plain-text address label next to the map pin icon is a placeholder
+  until you send the actual mailing address.
+- **Phone number** (optional) — not currently in the site anywhere. Send it
+  if you want a click-to-call link added near the map.
+
 ## Status
 
 Logo and virtual tour video received and renamed to descriptive filenames
 (originals had auto-generated names like `Screenshot 2026-09-09 122647.png`
 from the upload). Design reference screenshot is in `/public/reference/` for
 comparison only. Still waiting on hero image, suite photos, professional
-photos, and icons before the build begins.
+photos, icons, and the business street address before the build is fully
+finished.
+
+Testimonials section currently uses sample/placeholder reviews (clearly
+marked in `index.html` with `<!-- SAMPLE TESTIMONIALS — REPLACE WITH REAL
+CUSTOMER REVIEWS -->`) — swap them for real client testimonials whenever
+you have them.

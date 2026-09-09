@@ -302,6 +302,51 @@
   .why-item h3{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
   .why-item p{font-size:13.5px;font-weight:300;color:var(--gray-600);line-height:1.8;margin:0;}
 
+  /* ---------- Testimonials ---------- */
+  .testimonials{padding:120px 0;background:var(--white);}
+  .testimonials-head{max-width:620px;margin:0 auto;text-align:center;}
+  .testimonials-head h2{font-size:38px;font-weight:700;}
+  .testimonials-head h2 .pink{color:var(--pink);display:block;}
+  .testimonials-head .heading-rule{margin-left:auto;margin-right:auto;}
+  .testimonials-note{
+    max-width:520px;margin:22px auto 60px;text-align:center;
+    font-family:var(--serif-accent);font-style:italic;font-weight:500;font-size:14.5px;color:var(--gray-600);
+  }
+  .testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+  .testimonial-card{
+    position:relative;background:var(--cream);border:1px solid var(--gray-300);border-radius:4px;
+    padding:40px 34px 30px;box-shadow:0 20px 44px -30px rgba(20,15,18,.25);overflow:hidden;
+    transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .testimonial-card:hover{transform:translateY(-6px);box-shadow:0 26px 54px -26px rgba(20,15,18,.3);border-color:var(--gold);}
+  .testimonial-card .quote-mark{
+    position:absolute;top:6px;left:26px;font-family:var(--serif);font-size:70px;line-height:1;
+    color:var(--gold-light);opacity:.9;user-select:none;
+  }
+  .testimonial-stars{position:relative;display:flex;gap:4px;margin-bottom:18px;color:var(--pink);}
+  .testimonial-stars svg{width:13px;height:13px;}
+  .testimonial-card blockquote{
+    position:relative;font-family:var(--serif-accent);font-style:italic;font-weight:500;font-size:18px;
+    line-height:1.65;color:var(--near-black);margin:0 0 26px;
+  }
+  .testimonial-footer{display:flex;align-items:center;gap:14px;padding-top:20px;border-top:1px solid var(--gray-300);}
+  .testimonial-avatar{
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);flex:none;
+    display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;
+    color:var(--gold-dark);font-size:15px;
+  }
+  .testimonial-name{font-family:var(--sans);font-weight:500;font-size:13.5px;color:var(--near-black);}
+  .testimonial-role{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dark);margin-top:3px;}
+
+  /* ---------- Visit / Location ---------- */
+  .visit-address{display:flex;align-items:flex-start;gap:14px;margin:30px 0 36px;}
+  .visit-address svg{width:20px;height:20px;color:var(--gold);flex:none;margin-top:2px;}
+  .visit-address .addr-text{font-size:14.5px;line-height:1.75;color:var(--near-black);}
+  .text-missing{color:var(--gold-dark);font-style:italic;padding-bottom:2px;border-bottom:1px dashed var(--gold);}
+  .text-missing small{display:block;font-style:normal;font-size:11px;line-height:1.6;letter-spacing:.01em;color:var(--gray-600);margin-top:6px;border-bottom:none;}
+  .visit-actions{display:flex;gap:16px;flex-wrap:wrap;}
+  .media iframe{width:100%;height:100%;border:0;display:block;}
+
   /* ---------- Virtual tour ---------- */
   .tour{position:relative;color:#fff;min-height:520px;display:flex;align-items:center;overflow:hidden;background:var(--black);}
   .tour .tour-media{position:absolute;inset:0;}
@@ -378,7 +423,8 @@
     .why-grid{grid-template-columns:repeat(2,1fr);row-gap:36px;}
     .why-item{border-left:none;padding-left:0;}
     .hero h1{font-size:42px;}
-    .split, .why{padding:80px 0;}
+    .split, .why, .testimonials{padding:80px 0;}
+    .testimonial-grid{grid-template-columns:1fr;gap:22px;}
   }
   @media (max-width: 760px){
     nav.primary-nav{
@@ -398,7 +444,10 @@
     .cta-band h2, .tour h2, .split h2{font-size:29px;}
     .hero h1{font-size:34px;}
     .hero .lede{font-size:19px;}
-    .split, .why, .cta-band{padding-top:72px;padding-bottom:72px;}
+    .split, .why, .cta-band, .testimonials{padding-top:72px;padding-bottom:72px;}
+    .testimonial-card{padding:36px 26px 26px;}
+    .testimonial-card .quote-mark{font-size:56px;left:20px;}
+    .visit-address{margin:24px 0 30px;}
     .tour .wrap{padding-top:72px;padding-bottom:72px;}
     .play-btn{position:relative;top:auto;right:auto;transform:none;margin:8px auto 0;}
     .play-btn:hover{transform:scale(1.07);}
@@ -422,7 +471,7 @@
         <li><a href="#virtual-tour">Virtual Tour</a></li>
         <li><a href="#professionals">Professionals</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#visit">Contact</a></li>
       </ul>
     </nav>
     <div class="nav-actions">
@@ -594,6 +643,92 @@
   </div>
 </section>
 
+<!-- SAMPLE TESTIMONIALS — REPLACE WITH REAL CUSTOMER REVIEWS -->
+<section class="testimonials" id="testimonials">
+  <div class="wrap">
+    <div class="testimonials-head reveal" style="--rd:0s;">
+      <p class="eyebrow" style="justify-content:center;">Client Experiences</p>
+      <h2>What Beauty Professionals<span class="pink grad-text">Are Saying</span></h2>
+      <span class="heading-rule"></span>
+    </div>
+    <p class="testimonials-note reveal" style="--rd:.06s;">Sample testimonials shown to illustrate the experience A-1 FantasyBar aims to deliver — to be replaced with real client reviews.</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal" style="--rd:0s;">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+        </div>
+        <blockquote>Renting my own suite here changed everything — I finally have a space that feels like mine, and my clients love the upgrade.</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">J</div>
+          <div>
+            <div class="testimonial-name">Jasmine T.</div>
+            <div class="testimonial-role">Hairstylist</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="--rd:.08s;">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+        </div>
+        <blockquote>The suites are polished, private, and exactly what I needed to grow my barbering business without the overhead of a full shop.</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">M</div>
+          <div>
+            <div class="testimonial-name">Marcus D.</div>
+            <div class="testimonial-role">Barber</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="--rd:.16s;">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+        </div>
+        <blockquote>From the lighting to the layout, every detail feels considered. My esthetics clients constantly compliment the space.</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">R</div>
+          <div>
+            <div class="testimonial-name">Renee A.</div>
+            <div class="testimonial-role">Esthetician</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="--rd:.24s;">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="testimonial-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7L2 9.2l7.1-.6z"/></svg>
+        </div>
+        <blockquote>Booking my suite was simple, the team was responsive, and I was building my client list within the first week.</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">C</div>
+          <div>
+            <div class="testimonial-name">Camille B.</div>
+            <div class="testimonial-role">Lash Artist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ VIRTUAL TOUR ============ -->
 <section class="tour" id="virtual-tour">
   <div class="tour-media">
@@ -633,6 +768,33 @@
     </video>
   </div>
 </div>
+
+<!-- ============ VISIT US / LOCATION ============ -->
+<section class="split" id="visit">
+  <div class="wrap">
+    <div class="content reveal" style="--rd:0s;">
+      <p class="eyebrow">Find Your Suite</p>
+      <h2>Visit A-1 <span class="pink grad-text" style="display:inline;">FantasyBar</span></h2>
+      <span class="heading-rule"></span>
+      <p class="desc" style="margin-top:16px;">Come tour the space in person and see which suite fits your business. We're easy to find and happy to show you around.</p>
+      <div class="visit-address">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span class="addr-text text-missing">Add your exact street address here
+          <small>The map and directions below are already wired to the correct location — this label just needs the plain-text address to display next to it.</small>
+        </span>
+      </div>
+      <div class="visit-actions">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=32.6628406,-96.9109352" target="_blank" rel="noopener" class="btn btn-solid">Get Directions
+          <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="media reveal-scale" style="--rd:.15s;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2764.0720468866925!2d-96.9109352!3d32.662840599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e914dea0d5d0d%3A0xb24b2dbce2f2fcc4!2sA-1%20Fantasybar%20Beauty%20Bar!5e1!3m2!1sen!2sph!4v1788933530465!5m2!1sen!2sph"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="A-1 FantasyBar Beauty Bar location map"></iframe>
+    </div>
+  </div>
+</section>
 
 <!-- ============ CTA BANNER ============ -->
 <section class="cta-band" id="contact">
