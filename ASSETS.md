@@ -54,7 +54,7 @@ like Next.js/Vite, so assets are served directly without extra build config.
 | `public/videos/virtual-tour.mp4` | Virtual Tour section (also reused as the hero's full-bleed background video) |
 | `public/images/suites/suite-01.mp4` | Suite Rentals section — used as a looping video instead of a static photo, per your request |
 | `public/images/gallery/virtual-tour-bg.mp4` | Virtual Tour section's background — looping video behind the dark overlay, instead of a static poster photo |
-| `public/images/professionals/professional-01.jpg` | Independent Professionals section photo (renamed from `Gemini_Generated_Image_....jpg`) |
+| `public/images/professionals/professional-01.jpg` | Independent Professionals section photo (replaced Sept 24 with a new photo of a different stylist/client, same suite — renamed from `ChatGPT Image Sep 24, 2026, 04_40_24 AM.png`) |
 | `public/images/hero/hero-poster.png` | Hero `<video poster>` — shown briefly before the background video loads (renamed from `About image.png`) |
 | `public/reference/website-design-reference.png` | Design reference only — **not** used as a site asset |
 
